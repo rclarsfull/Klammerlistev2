@@ -8,4 +8,11 @@ public class Klammer {
   public String getFarbe() {
     return this.farbe;
   }
+
+  @Override
+  public String toString() {
+    return "Klammer{" +
+            "farbe='" + farbe + '\'' +
+            '}';
+  }
 }

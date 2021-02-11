@@ -25,6 +25,34 @@ public class Klammernkette_Komm {
     } 
     return zaehler;   
   }
+
+  public int getLaengeRekusiv(){
+    if (ersteKlammer==null){
+      return 0;
+    }
+    return getLaengeRekusiv(ersteKlammer);
+  }
+
+  private int getLaengeRekusiv(Klammer k){
+    if(k.naechste==null){
+      return 1;
+    }
+    return 1+this.getLaengeRekusiv(k.naechste);
+  }
+
+
+  public Klammer getLetzteKlammerRek(Klammer k){
+    if (k.naechste!=null) return getLetzteKlammerRek(k.naechste);
+    return k;
+  }
+
+  public Klammer findKlammerReku(String farbe,Klammer k){
+    if (k.naechste!=null  && !farbe.equalsIgnoreCase(k.getFarbe())){
+      return findKlammerReku(farbe,k.naechste);
+    }
+    return k;
+  }
+
   
   public Klammer getErsteK(){
     return this.ersteKlammer;
@@ -83,7 +111,7 @@ public class Klammernkette_Komm {
     int zaehler=0;
     Klammer merker= this.ersteKlammer;
     if (merker == null|| i==0) {   // Falls die Liste leer ist ( merker also this.ersteKlammer = null) 
-                                   //oder der Parameter i=0, dann wird die Klammer vorne eingefuegt
+      //oder der Parameter i=0, dann wird die Klammer vorne eingefuegt
       this.vorneEinfuegen(k);    
       return true; 
       
@@ -94,7 +122,7 @@ public class Klammernkette_Komm {
       } 
       k.naechste = merker.naechste; //Die restliche Liste wird an k angehängt
       merker.naechste = k;          //Der vordere Teil der Liste wird mit k verknüpft
-                                    //Hiermit kann auch am Ende eingefügt werden
+      //Hiermit kann auch am Ende eingefügt werden
       return true;
     }     
   }
@@ -109,9 +137,30 @@ public class Klammernkette_Komm {
     einfuegenAnPos(pos,k1);
     return true;
   }
+
+  public void enfernenAnPos(int pos){
+    Klammer temp=ersteKlammer;
+    int counter=0;
+    
+    if (ersteKlammer==null){
+      // nix machen
+    } else if (pos>laenge()){
+        System.out.println("Fehler falscher index");
+      } else if (pos==0){
+          ersteKlammer=ersteKlammer.naechste; //Sauber ausketten vergessen
+        }else {
+          while ((counter < pos - 1)) {
+            counter++;
+            temp = temp.naechste;
+          }
+          Klammer speicher = temp;
+          speicher.naechste = temp.naechste.naechste;
+          
+        }
+  }
   
   //Methode hinteneinfügen implementieren mittels Aufrufen der obigen 
   //Methode für i = this.laenge(), siehe auch Kommentar in Zeile 97
 
-  }
+}
 
