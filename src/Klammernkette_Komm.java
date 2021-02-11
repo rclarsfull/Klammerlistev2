@@ -46,9 +46,14 @@ public class Klammernkette_Komm {
     return k;
   }
 
+
+
   public Klammer findKlammerReku(String farbe,Klammer k){
     if (k.naechste!=null  && !farbe.equalsIgnoreCase(k.getFarbe())){
       return findKlammerReku(farbe,k.naechste);
+    }
+    if (k.naechste==null && !farbe.equalsIgnoreCase(k.getFarbe())){
+      return null;
     }
     return k;
   }
